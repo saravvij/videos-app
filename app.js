@@ -27,8 +27,11 @@ MongoClient.connect("mongodb://localhost:27017/video", (err, db) => {
     });
 
     app.get("/", (req, resp) => {
-        //resp.send("Hello, welcome to express");
-        resp.render("hello", { "message": "welcome to exp" });
+        db.collection("movies").find({}).toArray((err, movies)=>{
+            console.log(movies);
+            resp.render("movies", {"movies":movies});
+        });
+        
     });
 
     app.get("/addmovie", (req, resp) => {
